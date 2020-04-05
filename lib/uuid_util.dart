@@ -5,17 +5,8 @@ import 'dart:math';
 class UuidUtil {
   /// Math.Random()-based RNG. All platforms, fast, not cryptographically strong. Optional Seed passable.
   static List<int> mathRNG({int seed = -1}) {
-    var rand, b = List<int>(16);
 
-    var _rand = (seed == -1) ? Random() : Random(seed);
-    for (var i = 0; i < 16; i++) {
-      if ((i & 0x03) == 0) {
-        rand = (_rand.nextDouble() * 0x100000000).floor().toInt();
-      }
-      b[i] = rand >> ((i & 0x03) << 3) & 0xff;
-    }
-
-    return b;
+    return cryptoRNG();
   }
 
   /// Crypto-Strong RNG. All platforms, unknown speed, cryptographically strong (theoretically)
